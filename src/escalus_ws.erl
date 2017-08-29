@@ -107,7 +107,9 @@ init([Args, Owner]) ->
     LegacyWS = get_legacy_ws(Args, false),
     EventClient = proplists:get_value(event_client, Args),
     SSL = proplists:get_value(ssl, Args, false),
-    WSOptions = [{ssl, SSL}],
+    Compress = proplists:get_value(compress, Args, false),
+    WSOptions = [{ssl, SSL}, {compress, Compress}] ++
+        proplists:get_value(extra_ws_options, Args, []),
     {ok, Socket} = wsecli:start(Host, Port, Resource, WSOptions),
     Pid = self(),
     wsecli:on_open(Socket, fun() -> Pid ! opened end),
