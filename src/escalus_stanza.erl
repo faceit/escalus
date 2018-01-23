@@ -897,4 +897,4 @@ argument_to_string(F) when is_float(F) -> io_lib:format("~.2f", [F]).
 
 -spec id() -> binary().
 id() ->
-    base16:encode(crypto:rand_bytes(16)).
+    base16:encode(crypto:strong_rand_bytes(16)).
